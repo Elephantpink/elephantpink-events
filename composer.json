@@ -1,0 +1,51 @@
+{
+    "name": "elephantpink/events",
+    "description": "A simple events package for Laravel 6.",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Ramírez",
+            "email": "dramirez@elephantpink.es"
+        }
+    ],
+    "minimum-stability": "dev",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "EPink\\Events\\EventsServiceProvider"
+            ]
+        },
+        "npm": {
+            "lang.js": "^1.1.14",
+            "laravel-mix-svg-vue": "^0.2.6",
+            "sass": "^1.20.1",
+            "sass-loader": "7.*",
+            "vue": "^2.5.17",
+            "vue-template-compiler": "^2.6.10",
+            "vue-router": "^3.1.4",
+            "vuex": "^3.1.2"
+        }
+    },
+    "autoload": {
+        "classmap": [
+            "database/migrations",
+            "database/factories"
+        ],
+        "psr-4": {
+            "EPink\\Events\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^7.0",
+        "laravel/framework": "^6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0"
+    }
+}
