@@ -9,9 +9,13 @@ use EPink\Events\Http\Requests\StoreEvent;
 
 class EventsController extends Controller
 {
+    /**
+     * Class constructor
+     */
     public function __construct() {
         $this->middleware('auth:api')->except('index');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,8 +23,15 @@ class EventsController extends Controller
      */
     public function index()
     {
-        //
-        return response()->json(['events' => EventResource::collection(Event::orderBy('date')->get())]);
+        try {
+
+            return response()->json([
+                'events' => EventResource::collection(Event::orderBy('date')->get())
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Unexpected server error'], 500);
+        }
     }
 
     /**
@@ -34,9 +45,12 @@ class EventsController extends Controller
         $validated = $request->validated();
 
         try {
+
             $event = Event::create($validated);
 
-            return response()->json(['event' => $event], 200);
+            return response()->json([
+                'event' => $event
+            ], 200);
 
         } catch (\Exception $e) {
             return response()->json(['message' => 'Unexpected server error'], 500);
@@ -49,9 +63,17 @@ class EventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Event $event)
     {
-        //
+        try {
+
+            return response()->json([
+                'event' => new EventResource($event)
+            ], 200);
+            
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Unexpected server error'], 500);
+        }
     }
 
     /**
@@ -69,7 +91,9 @@ class EventsController extends Controller
 
             $event->update($validated);
 
-            return response()->json(['event' => $event], 200);
+            return response()->json([
+                'event' => $event
+            ], 200);
 
         } catch (\Exception $e) {
             return response()->json(['message' => 'Unexpected server error'], 500);
@@ -85,10 +109,12 @@ class EventsController extends Controller
     public function destroy(Event $event)
     {
         try {
+
             $event->delete();
 
-            return response()->json(null, 203);
-        } catch(\Exception $e) {
+            return response()->json(null, 204);
+
+        } catch (\Exception $e) {
             return response()->json(['message' => 'Unexpected server error'], 500);
         }
         
